@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -19,17 +20,83 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="20dp"
-        android:minHeight="48dp" />
+        android:layout_marginBottom="1dp"/>
+
+    <!-- Контейнер для Замовлення та Переміщення -->
+    <LinearLayout
+        android:id="@+id/orderContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/warehouseSpinner"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/radioGroupOrder"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButtonOrder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="Замовлення" />
+
+            <RadioButton
+                android:id="@+id/radioButtonTransfer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Переміщення" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <!-- Контейнер для Укомплектовано та Не укомплектовано -->
+    <LinearLayout
+        android:id="@+id/completedContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/orderContainer"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/radioGroupCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButtonCompleted"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="Укомплектовано" />
+
+            <RadioButton
+                android:id="@+id/radioButtonNotCompleted"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Не укомплектовано" />
+
+        </RadioGroup>
+
+    </LinearLayout>
 
     <!-- CardView для обведення RecyclerView двома квадратними лініями -->
     <androidx.cardview.widget.CardView
-        android:layout_width="395dp"
-        android:layout_height="667dp"
-        android:layout_below="@id/warehouseSpinner"
-        android:layout_marginTop="-20dp"
-        android:elevation="4dp"
-        android:padding="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/completedContainer"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="0dp"
         app:cardUseCompatPadding="true">

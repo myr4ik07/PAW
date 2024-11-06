@@ -75,8 +75,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     public static class Item {
-        private String boldText;
-        private String normalText;
+        private String boldText; // замовлення
+        private String normalText; // склад
         private String ref_id;
 
         public Item(String boldText, String normalText, String ref_id) {

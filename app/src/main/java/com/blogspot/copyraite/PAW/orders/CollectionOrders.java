@@ -1,15 +1,10 @@
 package com.blogspot.copyraite.PAW.orders;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blogspot.copyraite.PAW.MainActivity;
 import com.blogspot.copyraite.PAW.Other.AuthPasswordSave;
 import com.blogspot.copyraite.PAW.Other.ConfigLoader;
 import com.blogspot.copyraite.PAW.ModeSelection;
@@ -20,11 +15,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Base64;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -44,7 +46,11 @@ public class CollectionOrders extends AppCompatActivity {
     private HashMap<String, String> itemsMap = new HashMap<>(); // Зберігає ID та назви
     private List<String> itemNames = new ArrayList<>(); // Список лише для назв
     private HashMapSpinnerAdapter warehouseAdapter;
-    String selectedWarehouseId;
+    private String selectedWarehouseId;
+    private RadioGroup radioGroupOrder;
+    private RadioGroup radioGroupCompleted;
+    private String selectradioGroupOrder;
+    private String selectradioGroupCompleted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +87,31 @@ public class CollectionOrders extends AppCompatActivity {
 
         });
 
+        // Встановлюємо обробник подій для RadioGroup "Укомплектовано та Не укомплектовано"
+        radioGroupCompleted = findViewById(R.id.radioGroupCompleted);
+        radioGroupCompleted.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioButton = findViewById(checkedId);
+                selectradioGroupCompleted = radioButton.getText().toString();
+                // Заповнюємо таблицю документів із API
+                new FetchOrdersFromAPI().execute(selectedWarehouseId);
+            }
+        });
+
+        // Встановлюємо обробник подій для RadioGroup "Замовлення та Переміщення"
+        radioGroupOrder = findViewById(R.id.radioGroupOrder);
+        radioGroupOrder.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioButton = findViewById(checkedId);
+                selectradioGroupOrder = radioButton.getText().toString();
+                // Заповнюємо таблицю документів із API
+                new FetchOrdersFromAPI().execute(selectedWarehouseId);
+            }
+        });
     }
+
 
     private void recyclerViewClear() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -100,8 +130,6 @@ public class CollectionOrders extends AppCompatActivity {
             try {
                 String warehouseId = params[0];
 
-                recyclerViewClear();
-
                 // Отримання збереженого даних авторизації
                 AuthPasswordSave authPasswordSave = (AuthPasswordSave) getApplication();
 
@@ -113,7 +141,21 @@ public class CollectionOrders extends AppCompatActivity {
                 JSONObject config = ConfigLoader.loadConfig(getApplicationContext());
                 String api_url = config.optString("api_url");
 
-                URL url = new URL(api_url + "/listOrders?warehouse_id=" + warehouseId);
+                // Встановлення значень за замовчуванням, якщо параметри null
+                if (selectradioGroupOrder == null) {
+                    selectradioGroupOrder = "Замовлення";
+                }
+                if (selectradioGroupCompleted == null) {
+                    selectradioGroupCompleted = "Укомплектовано";
+                }
+
+                // Створення запиту
+                String queryString = "warehouse_id=" + warehouseId +
+                        "&selectradioGroupOrder=" + selectradioGroupOrder +
+                        "&selectradioGroupCompleted=" + selectradioGroupCompleted;
+
+                URL url = new URL(api_url + "/listOrders?" + queryString);
+
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Authorization", basicAuth);
@@ -147,6 +189,7 @@ public class CollectionOrders extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<JSONObject> resultList) {
+            recyclerViewClear();
             if (resultList != null && !resultList.isEmpty()) {
 
                 // Список замовлень
@@ -157,7 +200,10 @@ public class CollectionOrders extends AppCompatActivity {
                 // Обробка отриманого списку об'єктів
                 for (JSONObject jsonObject : resultList) {
                     try {
-                        items.add(new MyAdapter.Item(jsonObject.getString("ref"), jsonObject.getString("recipient"), jsonObject.getString("uid")));
+                        items.add(new MyAdapter.Item(jsonObject.getString("ref"),
+                                jsonObject.getString("recipient"),
+                                jsonObject.getString("uid")
+                        ));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
