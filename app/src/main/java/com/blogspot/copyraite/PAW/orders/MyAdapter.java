@@ -59,6 +59,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return items.size();
     }
 
+    public void clearData() {
+        items.clear();
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView textViewBold;
         TextView textViewNormal;

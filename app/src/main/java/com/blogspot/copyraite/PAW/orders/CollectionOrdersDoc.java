@@ -92,7 +92,7 @@ public class CollectionOrdersDoc extends AppCompatActivity {
                         resultList.add(jsonObject);
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Error: " + connection.getResponseCode(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Помилка: " + connection.getResponseCode(), Toast.LENGTH_SHORT).show();
                 }
                 connection.disconnect();
             } catch (Exception e) {
@@ -151,14 +151,14 @@ public class CollectionOrdersDoc extends AppCompatActivity {
                 recyclerView.setAdapter(adapter);
 
             } else {
-                Toast.makeText(getApplicationContext(), "Error retrieving data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Помилка отримання даних", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    public void ButtonBack(View view){
-        Intent CollectionOrdersPage = new Intent(this, CollectionOrders.class);
-        startActivity(CollectionOrdersPage);
-    }
+//    public void ButtonBack(View view){
+//        Intent CollectionOrdersPage = new Intent(this, CollectionOrders.class);
+//        startActivity(CollectionOrdersPage);
+//    }
 
 }

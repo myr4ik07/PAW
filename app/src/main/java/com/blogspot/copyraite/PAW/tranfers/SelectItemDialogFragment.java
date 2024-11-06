@@ -66,7 +66,7 @@ public class SelectItemDialogFragment extends DialogFragment {
         spinner.setAdapter(adapter);
 
         // Завантаження даних з API
-        new LoadItemsTask().execute();
+        new FetchWarehouseFromAPI().execute();
 
         confirmButton.setOnClickListener(v -> {
             String selectedItemName = spinner.getSelectedItem().toString();
@@ -84,7 +84,7 @@ public class SelectItemDialogFragment extends DialogFragment {
         return dialog;
     }
 
-    private class LoadItemsTask extends AsyncTask<Void, Void, HashMap<String, String>> {
+    private class FetchWarehouseFromAPI extends AsyncTask<Void, Void, HashMap<String, String>> {
 
         @Override
         protected HashMap<String, String> doInBackground(Void... voids) {

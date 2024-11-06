@@ -95,7 +95,7 @@ public class CollectionTransferDocPage extends AppCompatActivity {
                         resultList.add(jsonObject);
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Error: " + connection.getResponseCode(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Помилка: " + connection.getResponseCode(), Toast.LENGTH_SHORT).show();
                 }
                 connection.disconnect();
             } catch (Exception e) {

@@ -98,7 +98,7 @@ public class CollectionOrdersPhoto extends AppCompatActivity {
                     // Логування для перевірки даних
                     Log.d("CollectionOrdersPhoto", "Received data size: " + imageBytes.length);
                 } else {
-                     Toast.makeText(getApplicationContext(), "Error: " + connection.getResponseCode(), Toast.LENGTH_SHORT).show();
+                     Toast.makeText(getApplicationContext(), "Помилка: " + connection.getResponseCode(), Toast.LENGTH_SHORT).show();
                 }
                 connection.disconnect();
             } catch (Exception e) {
@@ -117,7 +117,7 @@ public class CollectionOrdersPhoto extends AppCompatActivity {
                     Log.e("CollectionOrdersPhoto", "ViewPager2 is null");
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Error retrieving data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Помилка отримання даних", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -162,4 +162,5 @@ public class CollectionOrdersPhoto extends AppCompatActivity {
         Intent AuthPage = new Intent(getApplicationContext(), CollectionOrdersDoc.class);
         startActivity(AuthPage);
     }
+
 }

@@ -2,19 +2,44 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="16dp"
     android:background="#22942137">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <!-- Spinner розміщений вгорі по центру -->
+    <Spinner
+        android:id="@+id/warehouseSpinner"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="20dp"
+        android:minHeight="48dp" />
 
-    <!-- Включаємо кнопку "Назад" -->
-<!--    <include-->
-<!--        layout="@layout/back_button_layout" />-->
+    <!-- CardView для обведення RecyclerView двома квадратними лініями -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="395dp"
+        android:layout_height="667dp"
+        android:layout_below="@id/warehouseSpinner"
+        android:layout_marginTop="-20dp"
+        android:elevation="4dp"
+        android:padding="1dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="0dp"
+        app:cardUseCompatPadding="true">
+
+        <!-- RecyclerView розміщений всередині CardView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
