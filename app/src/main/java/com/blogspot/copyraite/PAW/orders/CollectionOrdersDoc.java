@@ -28,6 +28,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.blogspot.copyraite.PAW.Other.AuthPasswordSave;
 import com.blogspot.copyraite.PAW.Other.ConfigLoader;
 import com.blogspot.copyraite.PAW.R;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -272,6 +274,13 @@ public class CollectionOrdersDoc extends AppCompatActivity {
 
     public void ClickButtonBarcodeScan(View view) {
         // Обробка натискання кнопки сканування штрих-коду
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        integrator.setPrompt("Скануйте штрих-код");
+        integrator.setCameraId(0);  // вибір камери (0 - задня, 1 - передня)
+        integrator.setBeepEnabled(true);
+        integrator.setBarcodeImageEnabled(false);
+        integrator.initiateScan();
     }
 
     // Метод для виклику API з отриманим штрих-кодом
@@ -501,6 +510,23 @@ public class CollectionOrdersDoc extends AppCompatActivity {
         }
         if (found) {
             Toast.makeText(getApplicationContext(), "Номенклатуру не знайдено", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(this, "Сканування скасовано", Toast.LENGTH_LONG).show();
+            } else {
+                String barcode = result.getContents();
+                EditText barcodeEditText = findViewById(R.id.barcodeEditText);
+                barcodeEditText.setText(barcode);
+                new GetNomenclatureTask().execute(barcode);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
