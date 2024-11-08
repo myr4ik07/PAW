@@ -1,100 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:padding="16dp"
     android:background="#22942137">
 
-    <!-- Чотири текстові поля відображення -->
-    <TextView
-        android:id="@+id/textView1"
+    <!-- Кнопка Укомплектовано з відступом від верхнього краю -->
+    <Button
+        android:id="@+id/completeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Менеджер: "
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_border"
+        android:text="Укомплектовано"
+        android:onClick="ClickButtonComplete"
+        android:textColor="@android:color/black" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Відповідальний: "
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Склад: "
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Сума: "
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <!-- Таблиця з двома колонками -->
+    <!-- Поле введення для штрих-коду з кнопкою зображення справа -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:id="@+id/barcodeInputLayout"
+        android:layout_width="395dp"
+        android:layout_height="45dp"
+        android:layout_below="@id/completeButton"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
 
-        <!-- Назви колонок -->
-        <TextView
+        <EditText
+            android:id="@+id/barcodeEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#D0B6B6"
-            android:text="Товар"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:hint="Введіть штрих-код номенклатури"
+            android:inputType="number"
+            android:minHeight="48dp" />
 
-        <TextView
-            android:layout_width="0dp"
+        <Button
+            android:id="@+id/barcodeScanButton"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#D0B6B6"
-            android:text="Кількість"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:background="@drawable/ic_barcode"
+            android:onClick="ClickButtonBarcodeScan"
+            android:text="" />
+
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="8dp" />
+        android:layout_below="@id/barcodeInputLayout"
+        android:layout_above="@id/printBarcodeButton"
+        android:layout_weight="1">
 
-<!--    <Button-->
-<!--        android:id="@+id/button"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="36dp"-->
-<!--        android:layout_marginEnd="36dp"-->
-<!--        android:background="#79175226"-->
-<!--        android:icon="@android:drawable/ic_menu_revert"-->
-<!--        android:onClick="ButtonBack"-->
-<!--        android:text="@string/ButtonBackName"-->
-<!--        android:textAlignment="center"-->
-<!--        app:icon="@android:drawable/ic_menu_revert" />-->
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-</LinearLayout>
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="?android:attr/dividerHorizontal"
+                android:showDividers="middle" />
+
+        </ScrollView>
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/printBarcodeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_border"
+        android:text="Друк штрих-коду"
+        android:onClick="ClickButtonPrintBarcode"
+        android:textColor="@android:color/black" />
+
+</RelativeLayout>

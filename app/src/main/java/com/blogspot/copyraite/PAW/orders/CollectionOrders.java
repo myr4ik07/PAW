@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blogspot.copyraite.PAW.MainActivity;
 import com.blogspot.copyraite.PAW.Other.AuthPasswordSave;
 import com.blogspot.copyraite.PAW.Other.ConfigLoader;
 import com.blogspot.copyraite.PAW.ModeSelection;
