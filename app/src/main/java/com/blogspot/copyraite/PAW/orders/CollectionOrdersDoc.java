@@ -1,7 +1,5 @@
 package com.blogspot.copyraite.PAW.orders;
 
-import static android.app.ProgressDialog.show;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,8 +13,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -41,7 +37,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CollectionOrdersDoc extends AppCompatActivity {
@@ -59,7 +54,7 @@ public class CollectionOrdersDoc extends AppCompatActivity {
         Intent intent = getIntent();
         ref_id_doc = intent.getStringExtra("REF_ID");
         if (ref_id_doc == null) {
-            Toast.makeText(this, "REF_ID is missing", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "REF_ID відсутній", Toast.LENGTH_SHORT).show();
             finish(); // Закриваємо Activity, якщо REF_ID відсутній
             return;
         }
@@ -104,6 +99,7 @@ public class CollectionOrdersDoc extends AppCompatActivity {
         new GetRequestDoc().execute();
     }
 
+    // Метод для виклику API з отримання документів
     private class GetRequestDoc extends AsyncTask<Void, Void, List<JSONObject>> {
 
         @Override
@@ -261,10 +257,16 @@ public class CollectionOrdersDoc extends AppCompatActivity {
 
     }
 
+    // Кнопка "Друк штрих-коду"
     public void ClickButtonPrintBarcode(View view) {
         // Обробка натискання кнопки "Друк штрих-коду"
+        Intent intent = new Intent(this, BarcodeView.class);
+        EditText editText = findViewById(R.id.barcodeEditText);
+        intent.putExtra("barcode", editText.getText().toString());
+        startActivity(intent);
     }
 
+    // Кнопка "Укомплектовано"
     public void ClickButtonComplete(View view) {
         // Обробка натискання кнопки "Укомплектовано"
         if (checkCompleteness(getApplicationContext(), (TableLayout) findViewById(R.id.tableLayout))) {
@@ -272,6 +274,7 @@ public class CollectionOrdersDoc extends AppCompatActivity {
         }
     }
 
+    // Кнопка сканування штрих-коду
     public void ClickButtonBarcodeScan(View view) {
         // Обробка натискання кнопки сканування штрих-коду
         IntentIntegrator integrator = new IntentIntegrator(this);
@@ -288,6 +291,7 @@ public class CollectionOrdersDoc extends AppCompatActivity {
         new GetNomenclatureTask().execute(barcode);
     }
 
+    // Метод для виклику API з отриманим штрих-кодом
     private class SetCompleteDocRequest extends AsyncTask<Void, Void, JSONObject> {
 
         @Override
@@ -357,6 +361,7 @@ public class CollectionOrdersDoc extends AppCompatActivity {
 
     }
 
+    // Метод для перевірки коректносты Плану та Факту
     public String productsCompletedGet() {
 
         JSONArray jsonArray = new JSONArray();
@@ -395,6 +400,7 @@ public class CollectionOrdersDoc extends AppCompatActivity {
 
     }
 
+    // Метод для перевірки коректносты Плану та Факту
     public Boolean checkCompleteness(Context context, TableLayout tableLayout) {
         double totalPlan = 0;
         double totalFact = 0;
@@ -432,6 +438,7 @@ public class CollectionOrdersDoc extends AppCompatActivity {
 
     }
 
+    // Клас для виклику API з отриманим штрих-кодом
     private class GetNomenclatureTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... barcodes) {
@@ -508,11 +515,12 @@ public class CollectionOrdersDoc extends AppCompatActivity {
                 break;
             }
         }
-        if (found) {
+        if (!found) {
             Toast.makeText(getApplicationContext(), "Номенклатуру не знайдено", Toast.LENGTH_SHORT).show();
         }
     }
 
+    // Метод для обробки результату сканування баркоду
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);

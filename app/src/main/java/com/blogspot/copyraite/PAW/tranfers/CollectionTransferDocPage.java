@@ -4,21 +4,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blogspot.copyraite.PAW.Other.AuthPasswordSave;
 import com.blogspot.copyraite.PAW.Other.ConfigLoader;
 import com.blogspot.copyraite.PAW.R;
-import com.blogspot.copyraite.PAW.orders.CollectionOrdersDoc;
 import com.blogspot.copyraite.PAW.orders.CollectionOrdersDocAdapter;
 
 import org.json.JSONArray;
