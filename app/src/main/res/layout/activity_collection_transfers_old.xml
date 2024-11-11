@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="#22942137">
+
+    <!-- Фільтр за статусом -->
+    <Spinner
+        android:id="@+id/statusSpinner"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/authorSpinner"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="20dp"
+        android:minHeight="48dp" />
+
+    <!-- Фільтр за автором -->
+    <Spinner
+        android:id="@+id/authorSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:minHeight="48dp" />
+
+    <!-- Фільтр за періодом (Дата З) -->
+    <TextView
+        android:id="@+id/startDateTextView"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/statusSpinner"
+        android:layout_alignStart="@+id/statusSpinner"
+        android:hint="Дата з"
+        android:padding="5dp"
+        tools:ignore="VisualLintOverlap" />
+
+    <!-- Фільтр за періодом (Дата По) -->
+    <TextView
+        android:id="@+id/endDateTextView"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/statusSpinner"
+        android:layout_alignEnd="@+id/statusSpinner"
+        android:hint="Дата по"
+        android:padding="5dp"
+        tools:ignore="VisualLintOverlap" />
+
+    <!-- Кнопка "Застосувати фільтр" -->
+    <Button
+        android:id="@+id/applyFilterButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startDateTextView"
+        android:layout_marginTop="11dp"
+        android:text="Застосувати фільтр"
+        android:background="@drawable/button_border"
+        android:textColor="@android:color/black"
+        tools:ignore="VisualLintButtonSize,VisualLintOverlap" />
+
+    <!-- Список -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="395dp"
+        android:layout_height="466dp"
+        android:layout_below="@+id/applyFilterButton"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="63dp" />
+
+    <!-- Включаємо кнопку "Назад" -->
+<!--    <include-->
+<!--        layout="@layout/back_button_layout" />-->
+
+</RelativeLayout>

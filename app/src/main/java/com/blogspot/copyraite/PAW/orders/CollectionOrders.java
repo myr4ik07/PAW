@@ -218,7 +218,7 @@ public class CollectionOrders extends AppCompatActivity {
 
     }
 
-    private class FetchWarehouseFromAPI extends AsyncTask<Void, Void, HashMap<String, String>> {
+    public class FetchWarehouseFromAPI extends AsyncTask<Void, Void, HashMap<String, String>> {
 
         @Override
         protected HashMap<String, String> doInBackground(Void... voids) {

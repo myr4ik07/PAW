@@ -97,6 +97,7 @@ public class CollectionOrdersDoc extends AppCompatActivity {
 
         // Запускаємо асинхронний GET запит при відкритті Activity
         new GetRequestDoc().execute();
+
     }
 
     // Метод для виклику API з отримання документів

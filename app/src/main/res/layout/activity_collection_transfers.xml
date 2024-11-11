@@ -1,82 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     android:gravity="center"
     android:padding="16dp"
     android:background="#22942137">
 
-    <!-- Фільтр за статусом -->
+    <!-- Спіннер для вибору складу -->
     <Spinner
-        android:id="@+id/statusSpinner"
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/authorSpinner"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="20dp"
-        android:minHeight="48dp" />
-
-    <!-- Фільтр за автором -->
-    <Spinner
-        android:id="@+id/authorSpinner"
+        android:id="@+id/warehouseSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="8dp"
         android:minHeight="48dp" />
 
-    <!-- Фільтр за періодом (Дата З) -->
-    <TextView
-        android:id="@+id/startDateTextView"
-        android:layout_width="150dp"
+    <!-- Спіннер для вибору контрагента -->
+    <Spinner
+        android:id="@+id/counterpartySpinner"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/statusSpinner"
-        android:layout_alignStart="@+id/statusSpinner"
-        android:hint="Дата з"
-        android:padding="5dp"
-        tools:ignore="VisualLintOverlap" />
+        android:layout_marginBottom="8dp"
+        android:minHeight="48dp" />
 
-    <!-- Фільтр за періодом (Дата По) -->
-    <TextView
-        android:id="@+id/endDateTextView"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/statusSpinner"
-        android:layout_alignEnd="@+id/statusSpinner"
-        android:hint="Дата по"
-        android:padding="5dp"
-        tools:ignore="VisualLintOverlap" />
+    <LinearLayout
+        android:id="@+id/barcodeInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
 
-    <!-- Кнопка "Застосувати фільтр" -->
+        <!-- Поле вводу для штрих-коду -->
+        <EditText
+            android:id="@+id/barcodeInput"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="Введіть штрих-код"
+            android:inputType="number"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <!-- Кнопка для сканування штрих-коду -->
+        <Button
+            android:id="@+id/barcodeScanButton"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_barcode"
+            android:onClick="ClickButtonBarcodeScan"
+            android:text=""
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    </LinearLayout>
+
+    <!-- Кнопка Видалити строку -->
     <Button
-        android:id="@+id/applyFilterButton"
+        android:id="@+id/deleteRowButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/startDateTextView"
-        android:layout_marginTop="11dp"
-        android:text="Застосувати фільтр"
         android:background="@drawable/button_border"
         android:textColor="@android:color/black"
-        tools:ignore="VisualLintButtonSize,VisualLintOverlap" />
+        android:onClick="ClickButtonDeleteRow"
+        android:text="Видалити строку" />
 
-    <!-- Список -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
-        android:layout_width="395dp"
-        android:layout_height="466dp"
-        android:layout_below="@+id/applyFilterButton"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="63dp" />
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/printBarcodeButton"
+        android:layout_below="@id/barcodeInputLayout"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="1">
 
-    <!-- Включаємо кнопку "Назад" -->
-<!--    <include-->
-<!--        layout="@layout/back_button_layout" />-->
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-</RelativeLayout>
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="?android:attr/dividerHorizontal"
+                android:showDividers="middle" />
+
+        </ScrollView>
+    </HorizontalScrollView>
+
+    <!-- Кнопка для додавання надходження -->
+    <Button
+        android:id="@+id/addEntryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_border"
+        android:textColor="@android:color/black"
+        android:onClick="ClockButtonAddDocIncome"
+        android:text="Добавити надходження" />
+
+</LinearLayout>

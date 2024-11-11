@@ -18,9 +18,13 @@
         android:theme="@style/Theme.PAW"
         tools:targetApi="31">
         <activity
+            android:name=".tranfers.CollectionTransfers"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".orders.BarcodeView"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tranfers.CollectionTransferDocPage"
             android:exported="false"
@@ -34,7 +38,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".tranfers.CollectionTransfers"
+            android:name=".tranfers.CollectionTransfersOld"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

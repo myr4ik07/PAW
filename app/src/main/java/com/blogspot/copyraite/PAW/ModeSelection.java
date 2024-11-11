@@ -11,9 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.blogspot.copyraite.PAW.orders.CollectionOrders;
 import com.blogspot.copyraite.PAW.tranfers.CollectionTransfers;
+import com.blogspot.copyraite.PAW.tranfers.CollectionTransfersOld;
 import com.blogspot.copyraite.PAW.tranfers.SelectItemDialogFragment;
 
 public class ModeSelection extends AppCompatActivity implements SelectItemDialogFragment.OnItemSelectedListener {
+
+    Boolean newPage = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +34,21 @@ public class ModeSelection extends AppCompatActivity implements SelectItemDialog
     // Відкриваємо список Переміщень
     public void ClickButtonModeSelectionCollectionTransfers(View view) {
         Button openDialogButton = findViewById(R.id.button2);
-        openDialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Відкриваємо діалогове вікно
-                SelectItemDialogFragment dialog = new SelectItemDialogFragment();
-                dialog.show(getSupportFragmentManager(), "SelectItemDialog");
-            }
-        });
+
+        if (newPage) {
+            Intent CollectionTransfersPage = new Intent(this, CollectionTransfers.class);
+            startActivity(CollectionTransfersPage);
+            newPage = false;
+        } else {
+            openDialogButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Відкриваємо діалогове вікно
+                    SelectItemDialogFragment dialog = new SelectItemDialogFragment();
+                    dialog.show(getSupportFragmentManager(), "SelectItemDialog");
+                }
+            });
+        }
     }
 
     @Override
@@ -54,7 +64,7 @@ public class ModeSelection extends AppCompatActivity implements SelectItemDialog
         if (selectedItem == null || selectedItem.isEmpty()) {
             Toast.makeText(this, "Склад не вибрано!", Toast.LENGTH_SHORT).show();
         } else {
-            Intent CollectionTransfersPage = new Intent(this, CollectionTransfers.class);
+            Intent CollectionTransfersPage = new Intent(this, CollectionTransfersOld.class);
             CollectionTransfersPage.putExtra("id_warehouse", selectedId); // Передаємо id_warehouse
             startActivity(CollectionTransfersPage);
         }
