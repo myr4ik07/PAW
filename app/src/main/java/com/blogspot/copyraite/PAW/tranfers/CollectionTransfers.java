@@ -50,11 +50,17 @@ public class CollectionTransfers extends AppCompatActivity {
     private com.blogspot.copyraite.PAW.tranfers.HashMapSpinnerAdapterConterparty warehouseAdapter;
     private com.blogspot.copyraite.PAW.tranfers.HashMapSpinnerAdapterConterparty conterpartyAdapter; // CH
     private EditText barcodeEditText;
+    private View overlay;
+    private View progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_transfers);
+
+        // Ініціалізуємо ProgressBar
+        progressBar = findViewById(R.id.progressBar);
+        overlay = findViewById(R.id.overlay);
 
         // Дозволяємо контенту заходити під статус-бар і навігаційну панель
         View decorView = getWindow().getDecorView();
@@ -280,6 +286,15 @@ public class CollectionTransfers extends AppCompatActivity {
     private class FetchCounterpartiesFromAPI extends AsyncTask<Void, Void, HashMap<String, String>> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Показуємо спінер перед виконанням асинхронного методу
+            progressBar.setVisibility(View.VISIBLE);
+            // Блокуємо взаємодію з інтерфейсом
+            progressBar.setClickable(true);
+        }
+
+        @Override
         protected HashMap<String, String> doInBackground(Void... voids) {
             HashMap<String, String> result = new HashMap<>();
             try {
@@ -341,6 +356,11 @@ public class CollectionTransfers extends AppCompatActivity {
                 itemNames.addAll(result.keySet()); // Додаємо лише назви в itemNames
 
                 conterpartyAdapter.notifyDataSetChanged(); // Оновлюємо Spinner після завантаження даних
+
+                // Ховаємо спінер після завершення асинхронного методу
+                progressBar.setVisibility(View.GONE);
+                // Дозволяємо взаємодію з інтерфейсом
+                progressBar.setClickable(false);
 
             }
         }

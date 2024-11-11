@@ -25,6 +25,21 @@
         android:layout_marginBottom="8dp"
         android:minHeight="48dp" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:indeterminate="true"
+        android:layout_centerInParent="true"/>
+
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:id="@+id/barcodeInputLayout"
         android:layout_width="match_parent"
